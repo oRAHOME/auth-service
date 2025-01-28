@@ -1,17 +1,30 @@
-# Custom auth service
+# Custom Auth Service
 
-## setup instructions
+## Setup Instructions
 
-1. Install python (we recommend 3.9)
-2. clone the repository ```git clone <repository link>```
-3. initiate and activate a virtual environment:
-    - for windows based systems: 
-        1. `python -m venv authenv`
-        2. `authenv\Scripts\activate`
-    - for unix like os: 
-        1. `python3 -m venv authenv`
-        2. `source authenv/bin/activate`
-4. install dependancies: `pip install requirements.txt`
-5. Run the service using flask's inbuild wsgi for testing:
-    - `flask run`
-    
+1. Install **Node.js v22**.
+2. Clone this repository and navigate to the `auth-service` directory:
+   ```bash
+   cd ./auth-service
+   ```
+3. Install the dependencies:
+   ```bash
+   npm i
+   ```
+4. Start the server:
+   ```bash
+   npm run start
+   ```
+5. The server will start on `http://localhost:8000/`.
+
+### Environment Variables
+Ensure you set up the following environment variables in a `.env` file:
+
+```plaintext
+ACCESS_TOKEN_SECRET=your-secret-key
+REFRESH_TOKEN_SECRET=your-refresh-secret-key
+GOOGLE_CLIENT_ID=your-client-id
+GOOGLE_CLIENT_SECRET=your-client-secret
+```
+
+---
