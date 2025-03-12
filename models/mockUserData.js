@@ -18,11 +18,12 @@ const mockUserData = [{
     ]}
 ];
 
-(async () => {
+const hashPasswords = async () => {
     for (const user of mockUserData) {
         user.hashedPassword = await bcrypt.hash(user.password, 10);
         delete user.password;
     }
-})();
+    return mockUserData;
+};
 
-module.exports = mockUserData;
+module.exports =  hashPasswords;
