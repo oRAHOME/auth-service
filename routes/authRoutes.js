@@ -6,7 +6,21 @@ const passport = require('passport');
 
 // /auth routes
 router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
-router.get('/google/callback', passport.authenticate('google', { session: false } ), googleAuthCallback);
+router.get('/google/callback',
+    passport.authenticate('google', { session: false }),
+    (req, res) => {
+        if (!req.user) {
+            return res.status(401).json({ message: 'OAuth login failed' });
+        }
+
+        res.json({
+            message: "Login successful",
+            accessToken: req.user.token,
+            refreshToken: req.user.refreshToken,
+            user: req.user.user
+        });
+    }
+);
 router.post('/register', register);
 router.post('/login', login);
 router.post('/token', token);

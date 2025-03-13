@@ -19,30 +19,30 @@ const pool = new Pool({
       } 
 });
 // Insert data after the server starts
-const insertMockData = async () => {
-  try {
-    // Call the function to get the hashed mock user data
-    const users = await mockUserData();
+// const insertMockData = async () => {
+//   try {
+//     // Call the function to get the hashed mock user data
+//     const users = await mockUserData();
 
-    for (const user of users) {
-      const userRes = await pool.query(
-        'INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING id',
-        [user.name, user.email, user.hashedPassword]
-      );
-      const userId = userRes.rows[0].id;
+//     for (const user of users) {
+//       const userRes = await pool.query(
+//         'INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING id',
+//         [user.name, user.email, user.hashedPassword]
+//       );
+//       const userId = userRes.rows[0].id;
 
-      for (const device of user.devices) {
-        await pool.query(
-          'INSERT INTO devices (user_id, name, type, state) VALUES ($1, $2, $3, $4)',
-          [userId, device.name, device.type, device.state]
-        );
-      }
-    }
-    console.log("Mock data inserted successfully!");
-  } catch (error) {
-    console.error("Error inserting mock data:", error);
-  }
-};
+//       for (const device of user.devices) {
+//         await pool.query(
+//           'INSERT INTO devices (user_id, name, type, state) VALUES ($1, $2, $3, $4)',
+//           [userId, device.name, device.type, device.state]
+//         );
+//       }
+//     }
+//     console.log("Mock data inserted successfully!");
+//   } catch (error) {
+//     console.error("Error inserting mock data:", error);
+//   }
+// };
 
 // Insert data after the server starts
 //insertMockData();
@@ -57,7 +57,7 @@ const insertMockData = async () => {
   });
 
   // Swagger UI
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(express.json());
 
