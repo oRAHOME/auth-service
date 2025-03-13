@@ -10,17 +10,19 @@ router.get('/google/callback',
     passport.authenticate('google', { session: false }),
     (req, res) => {
         if (!req.user) {
-            return res.status(401).json({ message: 'OAuth login failed' });
+            return res.status(401).send("<script>window.opener.postMessage({ error: 'OAuth login failed' }, '*'); window.close();</script>");
         }
 
-        res.json({
-            message: "Login successful",
-            accessToken: req.user.token,
-            refreshToken: req.user.refreshToken,
-            user: req.user.user
-        });
+        // Send JWT token to the parent window and close the popup
+        res.send(`
+            <script>
+                window.opener.postMessage({ accessToken: "${req.user.token}" }, "*");
+                window.close();
+            </script>
+        `);
     }
 );
+
 router.post('/register', register);
 router.post('/login', login);
 router.post('/token', token);
