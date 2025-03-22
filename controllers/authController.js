@@ -1,18 +1,11 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Pool } = require('pg');
-const mockUserData = require('../models/mockUserData');
 
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 require('dotenv').config();
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false
-    }
-})
+const pool = require('../db');
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -49,7 +42,6 @@ function googleAuthCallback (req, res) {
     });
 };
 
-
 // Register a new user
 async function register (req, res) {
     const { username, email, password, devices } = req.body;
@@ -66,7 +58,7 @@ async function register (req, res) {
         
         res.status(201).json({ message: 'User created', user: newUser.rows[0] });
     } catch (err) {
-        res.status(500).json({ message: 'An error has occured' });
+        res.status(500).json({ message: err });
     }
 };
 
