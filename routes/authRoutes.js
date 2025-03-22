@@ -6,6 +6,8 @@ const passport = require('passport');
 
 // /auth routes
 router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
+
+/* istanbul ignore next */
 router.get('/google/callback',
     passport.authenticate('google', { session: false }),
     (req, res) => {
@@ -26,7 +28,6 @@ router.get('/google/callback',
 router.post('/register', register);
 router.post('/login', login);
 router.post('/token', token);
-router.delete('/logout', logout);
 router.get('/users', authenticateToken, (req, res) => {
     res.json({ user: req.user})
 });

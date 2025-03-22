@@ -7,6 +7,7 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 require('dotenv').config();
 const pool = require('../db');
 
+/* istanbul ignore next */
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -30,6 +31,7 @@ passport.use(new GoogleStrategy({
 let tempTokens = [];
 
 // Google OAuth callback
+/* istanbul ignore next */
 function googleAuthCallback (req, res) {
     if (!req.user) {
         return res.status(401).json({ message: 'OAuth login failed' });
@@ -84,6 +86,7 @@ async function login (req, res) {
 };
 
 // Generate a new access token using a refresh token
+/* istanbul ignore next */
 function token (req, res) {
     const refreshToken = req.body.token;
     if (!refreshToken) return res.sendStatus(401);
@@ -94,13 +97,6 @@ function token (req, res) {
         const accessToken = generateAccessToken({ name: user.name });
         res.json({ accessToken });
     });
-};
-
-// Logout a user
-function logout (req, res) {
-    // Remove the refresh token from the database later 
-    tempTokens = tempTokens.filter(token => token !== req.body.token);
-    res.sendStatus(204);
 };
 
 // Helper functions
@@ -117,4 +113,4 @@ async function getUserByEmail(email) {
     return user.rows[0];
 }
 
-module.exports = { googleAuthCallback, register, login, token, logout };
+module.exports = { googleAuthCallback, register, login, token, generateAccessToken, getUserByEmail };

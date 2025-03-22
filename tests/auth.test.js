@@ -1,11 +1,16 @@
-jest.mock('./db.js');
+jest.mock('../db.js');
 jest.mock('bcrypt', () => ({
   hash: jest.fn().mockResolvedValue('testpassword'),
   compare: jest.fn().mockResolvedValue(true)
 }))
 const request = require('supertest');
-const app = require("./app");
-const pool = require('./db');
+const app = require("../app");
+const pool = require('../db');
+const jwt = require('jsonwebtoken');
+
+// Test these non-route functions
+const authenticateToken = require('../middleware/authenticateToken');  
+const { generateAccessToken} = require('../controllers/authController');
 
 describe('POST /auth/register', () => {
   beforeEach(() => {
@@ -70,3 +75,35 @@ describe('POST /auth/login', () => {
   })
 })
 
+app.get('/protected', authenticateToken, (req, res) => {
+  res.json({ message: 'Authorized', user: req.user });
+});
+
+describe('authenticateToken middleware', () => {
+  it('should allow valid token', async () => {
+    const token = jwt.sign({ name: 'test' }, process.env.ACCESS_TOKEN_SECRET);
+
+    const res = await request(app)
+      .get('/protected')
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.message).toBe('Authorized');
+  });
+
+  it('should reject missing token', async () => {
+    const res = await request(app).get('/protected');
+    expect(res.statusCode).toBe(401);
+  });
+});
+
+describe('generateAccessToken', () => {
+  it('should return a JWT token', () => {
+    const user = { id: 1, name: 'test', email: 'test@example.com' };
+    const token = generateAccessToken(user);
+
+    expect(typeof token).toBe('string');
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    expect(decoded.email).toBe(user.email);
+  });
+});
