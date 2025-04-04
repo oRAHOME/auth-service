@@ -15,7 +15,11 @@
    ```bash
    npm run start
    ```
-5. The server will start on `http://localhost:8000/`
+5. Or run unit tests with 
+   ```bash
+   npm test
+   ```
+6. The server will start on `http://localhost:8000/`
 
 ### Environment Variables
 Ensure you set up the following environment variables in a `.env` file:
