@@ -25,6 +25,7 @@ ACCESS_TOKEN_SECRET=your-secret-key
 REFRESH_TOKEN_SECRET=your-refresh-secret-key
 GOOGLE_CLIENT_ID=your-client-id
 GOOGLE_CLIENT_SECRET=your-client-secret
+DATABASE_URL=your-postgres-db
 ```
 
 ---
