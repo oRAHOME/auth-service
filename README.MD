@@ -33,3 +33,12 @@ DATABASE_URL=your-postgres-db
 ```
 
 ---
+
+## Testing
+
+The project uses Jest for testing.
+
+Run all tests:
+npm test
+
+---
