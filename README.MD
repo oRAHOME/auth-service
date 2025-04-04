@@ -59,8 +59,8 @@ Body:
 
 POST /auth/login  
 Log in an existing user with email and password.
-```json
 Body:
+```json
 {
   "email": "you@example.com",
   "password": "your-password"
