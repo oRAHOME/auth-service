@@ -49,31 +49,32 @@ Google OAuth2 callback. On success, sends a message with the access token to the
 POST /auth/register  
 Register a new user.  
 Body:
+```json
 {
   "username": "your-name",
   "email": "you@example.com",
   "password": "your-password"
 }
+```
 
 POST /auth/login  
-Log in an existing user with email and password.  
+Log in an existing user with email and password.
+```json
 Body:
 {
   "email": "you@example.com",
   "password": "your-password"
 }
+```
 
 POST /auth/token  
 Generate a new access token using a valid refresh token.  
 Body:
+```json
 {
   "token": "your-refresh-token"
 }
-
-GET /auth/users  
-Get information about the currently logged-in user.  
-Headers:
-Authorization: Bearer <access_token>
+```
 
 ---
 
