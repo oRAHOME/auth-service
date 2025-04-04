@@ -41,9 +41,11 @@ All endpoints are prefixed with: /auth
 ### Authentication Routes
 
 GET `/auth/google/callback`
+
 Google OAuth2 callback. On success, sends a message with the access token to the parent window and closes the popup.
 
 POST `/auth/register`
+
 Register a new user.  
 Body:
 ```json
@@ -55,6 +57,7 @@ Body:
 ```
 
 POST `/auth/login` 
+
 Log in an existing user with email and password.
 Body:
 ```json
@@ -64,7 +67,8 @@ Body:
 }
 ```
 
-POST `/auth/token`  
+POST `/auth/token`
+
 Generate a new access token using a valid refresh token.  
 Body:
 ```json
