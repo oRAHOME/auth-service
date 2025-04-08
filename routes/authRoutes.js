@@ -25,6 +25,11 @@ router.get('/google/callback',
     }
 );
 
+// For testing purposes only
+router.get('/protected', authenticateToken, (req, res) => {
+    res.json({ message: 'Authorized', user: req.user });
+});
+
 router.post('/register', register);
 router.post('/login', login);
 router.post('/token', token);
